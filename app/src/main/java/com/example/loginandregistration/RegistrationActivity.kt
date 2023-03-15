@@ -2,13 +2,15 @@ package com.example.loginandregistration
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.Toast
-import com.example.loginandregistration.databinding.ActivityLoginBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.backendless.Backendless
+import com.backendless.BackendlessUser
+import com.backendless.async.callback.AsyncCallback
 import com.example.loginandregistration.databinding.ActivityRegistrationBinding
 import com.mistershorr.loginandregistration.RegistrationUtil
+
 
 class RegistrationActivity : AppCompatActivity() {
 
@@ -58,6 +60,7 @@ class RegistrationActivity : AppCompatActivity() {
                         binding.editTextRegisterPassword.text.toString()
                     )
                 }
+                Backendless.UserService.register(registerUserOnBackendless(username, password, firstName, email))
                 setResult(Activity.RESULT_OK, resultIntent)
                 finish()
             }
@@ -65,5 +68,14 @@ class RegistrationActivity : AppCompatActivity() {
                 Toast.makeText(this, "Invalid Data, all queries must be properly filled in", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun registerUserOnBackendless(username: String, password: String, name: String, email: String) : BackendlessUser{
+        var user = BackendlessUser()
+        user.setProperty("username", username)
+        user.setProperty("password", password)
+        user.setProperty("name", name)
+        user.setProperty("email", email)
+        return user
     }
 }
