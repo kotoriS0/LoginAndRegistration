@@ -2,11 +2,11 @@ package com.example.loginandregistration
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.backendless.Backendless
 import com.backendless.BackendlessUser
 import com.backendless.async.callback.AsyncCallback
@@ -76,5 +76,17 @@ class LoginActivity : AppCompatActivity() {
             //3b. launch the activity for a result using the variable from the register for result contract above
             startRegistrationForResult.launch(registrationIntent)
         }
+    }
+    
+    private fun retrieveAllData() {
+        Backendless.Data.of(LoanData::class.java).find(object : AsyncCallback<List<LoanData?>?> {
+            override fun handleResponse(foundContacts: List<LoanData?>?) {
+                // all Contact instances have been found
+            }
+
+            override fun handleFault(fault: BackendlessFault) {
+                // an error has occurred, the error code can be retrieved with fault.getCode()
+            }
+        })
     }
 }

@@ -2,12 +2,14 @@ package com.example.loginandregistration
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.backendless.Backendless
 import com.backendless.BackendlessUser
 import com.backendless.async.callback.AsyncCallback
+import com.backendless.exceptions.BackendlessFault
 import com.example.loginandregistration.databinding.ActivityRegistrationBinding
 import com.mistershorr.loginandregistration.RegistrationUtil
 
@@ -44,38 +46,86 @@ class RegistrationActivity : AppCompatActivity() {
             val password = binding.editTextRegisterPassword.text.toString()
             val confirm = binding.editTextRegisterPasswordCheck.text.toString()
             val email = binding.editTextRegisterEmail.text.toString()
-            if(RegistrationUtil.validateName(firstName, lastName) &&
+
+            when {
+                RegistrationUtil.validateName(firstName) -> {
+                    binding.editTextRegisterFirstName.setTextColor(Color.GRAY)
+                }
+                RegistrationUtil.validateUsername(username) -> {
+                    binding.editTextRegisterUsername.setTextColor(Color.GRAY)
+                }
+                RegistrationUtil.validatePassword(password, confirm) -> {
+                    binding.editTextRegisterPassword.setTextColor(Color.GRAY)
+                    binding.editTextRegisterPasswordCheck.setTextColor(Color.GRAY)
+                }
+                RegistrationUtil.validateEmail(email) -> {
+                    binding.editTextRegisterEmail.setTextColor(Color.GRAY)
+                }
+            }
+
+            if(RegistrationUtil.validateName(firstName) &&
                 RegistrationUtil.validateUsername(username) &&
                 RegistrationUtil.validatePassword(password, confirm) &&
                 RegistrationUtil.validateEmail(email)) {
-                // apply lambda calls functions inside on object that apply is called on
-                val resultIntent = Intent().apply {
-                    // apply { putExtra } is doing same thing as resultIntent.putExtra()
-                    putExtra(
-                        LoginActivity.EXTRA_USERNAME,
-                        binding.editTextRegisterUsername.text.toString()
-                    )
-                    putExtra(
-                        LoginActivity.EXTRA_PASSWORD,
-                        binding.editTextRegisterPassword.text.toString()
-                    )
-                }
-                Backendless.UserService.register(registerUserOnBackendless(username, password, firstName, email))
-                setResult(Activity.RESULT_OK, resultIntent)
-                finish()
+
+                Backendless.UserService.register(registerUserOnBackendless(username, password, firstName, email, lastName), object:
+                    AsyncCallback<BackendlessUser> {
+                    override fun handleResponse(registeredUser: BackendlessUser)
+                    {
+                        // user has been registered and now can login
+                        // apply lambda calls functions inside on object that apply is called on
+                        val resultIntent = Intent().apply {
+                            // apply { putExtra } is doing same thing as resultIntent.putExtra()
+                            putExtra(
+                                LoginActivity.EXTRA_USERNAME,
+                                binding.editTextRegisterUsername.text.toString()
+                            )
+                            putExtra(
+                                LoginActivity.EXTRA_PASSWORD,
+                                binding.editTextRegisterPassword.text.toString()
+                            )
+                        }
+
+                        setResult(Activity.RESULT_OK, resultIntent)
+                        finish()
+                    }
+
+                    override fun handleFault(fault: BackendlessFault)
+                    {
+                        // an error has occurred, the error code can be retrieved with fault.getCode()
+                        Toast.makeText(it.context, "Error processing registration request", Toast.LENGTH_SHORT).show()
+                    }
+                } )
             }
             else {
                 Toast.makeText(this, "Invalid Data, all queries must be properly filled in", Toast.LENGTH_SHORT).show()
+                when {
+                    !RegistrationUtil.validateName(firstName) -> {
+                        binding.editTextRegisterFirstName.setTextColor(Color.RED)
+                    }
+                    !RegistrationUtil.validateUsername(username) -> {
+                        binding.editTextRegisterUsername.setTextColor(Color.RED)
+                    }
+                    !RegistrationUtil.validatePassword(password, confirm) -> {
+                        binding.editTextRegisterPassword.setTextColor(Color.RED)
+                        binding.editTextRegisterPasswordCheck.setTextColor(Color.RED)
+                    }
+                    !RegistrationUtil.validateEmail(email) -> {
+                        binding.editTextRegisterEmail.setTextColor(Color.RED)
+                    }
+                }
             }
         }
     }
 
-    fun registerUserOnBackendless(username: String, password: String, name: String, email: String) : BackendlessUser{
+    fun registerUserOnBackendless(username: String, password: String, name: String, email: String, lastName: String?) : BackendlessUser{
         var user = BackendlessUser()
         user.setProperty("username", username)
         user.setProperty("password", password)
         user.setProperty("name", name)
         user.setProperty("email", email)
+        if(lastName != null)
+            user.setProperty("lastName", lastName)
         return user
     }
 }

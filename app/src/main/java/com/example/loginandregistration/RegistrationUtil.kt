@@ -60,8 +60,8 @@ object RegistrationUtil {
     }
 
     // isn't empty
-    fun validateName(firstName: String?, lastName: String?) : Boolean {
-        return !(firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty())
+    fun validateName(firstName: String?) : Boolean {
+        return !(firstName == null || firstName.isEmpty())
     }
 
     // isn't empty
