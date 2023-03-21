@@ -11,6 +11,7 @@ import com.backendless.Backendless
 import com.backendless.BackendlessUser
 import com.backendless.async.callback.AsyncCallback
 import com.backendless.exceptions.BackendlessFault
+import com.backendless.persistence.DataQueryBuilder
 import com.example.loginandregistration.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -19,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
         // values to send in intents are called Extras and have EXTRA_BLAH format for naming key
         val EXTRA_USERNAME = "username"
         val EXTRA_PASSWORD = "password"
+        val EXTRA_USER_ID = "userId"
 
         val TAG = "LoginActivity"
     }
@@ -51,6 +53,10 @@ class LoginActivity : AppCompatActivity() {
                     override fun handleResponse(user: BackendlessUser?) {
                         // user has been logged in
                         Log.d(TAG, "onResponse: ${user?.getProperty("username")}")
+                        val detailIntent = Intent(it.context, LoanListActivity::class.java)
+                        detailIntent.putExtra(EXTRA_USER_ID, user?.objectId!!)
+                        it.context.startActivity(detailIntent)
+                        finish()
                     }
 
                     override fun handleFault(fault: BackendlessFault?) {
@@ -78,7 +84,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     
-    private fun retrieveAllData() {
+    private fun retrieveAllData(userId: String) {
+        val whereClause = "ownerId = '$userId'"
+        val queryBuilder = DataQueryBuilder.create()
+        queryBuilder.whereClause = whereClause
         Backendless.Data.of(LoanData::class.java).find(object : AsyncCallback<List<LoanData?>?> {
             override fun handleResponse(foundContacts: List<LoanData?>?) {
                 // all Contact instances have been found

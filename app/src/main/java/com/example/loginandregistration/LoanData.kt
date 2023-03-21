@@ -9,9 +9,11 @@ data class LoanData(
     var description: String = "",
     var repaid: Double = 0.0,
     var dateRepaid: Date = Date(0),
-    var isRepaid: Boolean = true
+    var isRepaid: Boolean = true,
+    var ownerId: String = "",
+    var objectId: String = ""
 ) {
-    fun balanceRemaining() : Double {
+    fun balanceRemaining(): Double {
         return amount - repaid
     }
 }
