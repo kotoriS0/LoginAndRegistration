@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_baseline_check_24.xml" value="0.173" />
+        <entry key="app/src/main/res/drawable/ic_baseline_check_box_24.xml" value="0.173" />
+        <entry key="app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.173" />
+        <entry key="app/src/main/res/drawable/ic_baseline_disabled_by_default_24.xml" value="0.173" />
         <entry key="app/src/main/res/layout/activity_loan_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_loan_list.xml" value="0.1703125" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.22146739130434784" />
