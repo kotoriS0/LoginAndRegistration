@@ -17,6 +17,7 @@
         <entry key="app/src/main/res/layout/item_loan_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_loan_list.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_loan_detail.xml" value="0.335" />
+        <entry key="app/src/main/res/menu/menu_loan_list.xml" value="0.1361111111111111" />
       </map>
     </option>
   </component>
