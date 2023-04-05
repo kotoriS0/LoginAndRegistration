@@ -14,6 +14,7 @@ import com.example.loginandregistration.databinding.ActivityLoanListBinding
 class LoanListActivity : AppCompatActivity() {
     companion object{
         const val TAG = "LoanListActivity"
+        const val EXTRA_LOAN = "loan"
     }
 
     private lateinit var binding: ActivityLoanListBinding

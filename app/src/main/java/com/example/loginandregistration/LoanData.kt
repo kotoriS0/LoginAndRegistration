@@ -1,7 +1,10 @@
 package com.example.loginandregistration
 
 import java.util.*
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class LoanData(
     var name: String = "Unknown",
     var amount: Double = 0.0,
@@ -12,7 +15,7 @@ data class LoanData(
     var isRepaid: Boolean = true,
     var ownerId: String = "",
     var objectId: String = ""
-) {
+) : Parcelable {
     fun balanceRemaining(): Double {
         return amount - repaid
     }

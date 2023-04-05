@@ -2,147 +2,25 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_itemLoanList"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textView_itemLoanList_amountOwed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="$0.0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_itemLoanList_currentAmountOwedLabel"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemLoanList_currentAmountOwedLabel" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_amountPaidLabel"
+        android:id="@+id/textView_itemLoanList_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="Amount Paid:"
-        app:layout_constraintEnd_toStartOf="@+id/textView_itemLoanList_amountPaid"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/textView_itemLoanList_currentAmountOwedLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textView_itemLoanList_amountOwed" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_amountPaid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="$0.0"
-        app:layout_constraintEnd_toStartOf="@+id/textView_itemLoanList_dateLastRepaidLabel"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView_itemLoanList_amountPaidLabel"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemLoanList_amountPaidLabel" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:text="00/00/0000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemLoanList_initialLoan" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_dateLastRepaidLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="Last Repayment:"
-        app:layout_constraintEnd_toStartOf="@+id/textView_itemLoanList_dateLastRepaid"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView_itemLoanList_amountPaid"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemLoanList_amountPaid" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_dateLastRepaid"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="00/00/0000"
-        app:layout_constraintEnd_toEndOf="@+id/textView_itemLoanList_date"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView_itemLoanList_dateLastRepaidLabel"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemLoanList_dateLastRepaidLabel" />
-
-    <Switch
-        android:id="@+id/switch_itemLoanList_forgiveDebt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Forgive Debt"
-        app:layout_constraintStart_toStartOf="@+id/textView_itemLoanList_amountPaidLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textView_itemLoanList_amountPaidLabel" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="Loading..."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/textView_itemLoanList_initialLoanLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textView_itemLoanList_initialLoanLabel" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="Loading..."
+        android:text="$0.00"
         android:textSize="21sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/imageView_itemLoanList_status"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView_itemLoanList_status"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="15dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/textView_itemLoanList_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemLoanList_name"
-        app:srcCompat="@drawable/ic_baseline_clear_24" />
-
     <TextView
-        android:id="@+id/textView_itemLoanList_initialLoanLabel"
+        android:id="@+id/waefwafweafsf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Initial Loan:"
-        app:layout_constraintStart_toStartOf="@+id/switch_itemLoanList_forgiveDebt"
-        app:layout_constraintTop_toBottomOf="@+id/switch_itemLoanList_forgiveDebt" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_initialLoan"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:text="$0.0"
-        app:layout_constraintEnd_toStartOf="@+id/textView_itemLoanList_date"
-        app:layout_constraintStart_toEndOf="@+id/textView_itemLoanList_initialLoanLabel"
-        app:layout_constraintTop_toTopOf="@+id/textView_itemLoanList_initialLoanLabel" />
-
-    <TextView
-        android:id="@+id/textView_itemLoanList_currentAmountOwedLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="Current Amount Owed:"
+        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_itemLoanList_name" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
