@@ -1,5 +1,7 @@
 package com.example.loginandregistration
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,27 +20,30 @@ import weborb.util.ThreadContext.context
 class LoanListAdapter(var data: MutableList<LoanData>): RecyclerView.Adapter<LoanListAdapter.ViewHolder>() {
     companion object {
         const val TAG = "LoanListAdapter"
+        const val EXTRA_LOAN = "loan"
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var textViewName: TextView
         var textViewAmount: TextView
         var layout: ConstraintLayout
+        var context: Context
 
         init {
             textViewName = view.findViewById(R.id.textView_itemLoanList_name)
             textViewAmount = view.findViewById(R.id.textView_itemLoanList_amount)
             layout = view.findViewById(R.id.layout_itemLoanList)
+            context = textViewName.context
         }
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.activity_loan_detail, viewGroup, false)
+            .inflate(R.layout.item_loan_list, viewGroup, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(viewHolder: LoanListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val loan = data[position]
         //Log.d(TAG, "onBindViewHolder: ${loan.name} / ${loan.balanceRemaining()}")
         viewHolder.textViewName.text = loan.name
@@ -61,6 +66,13 @@ class LoanListAdapter(var data: MutableList<LoanData>): RecyclerView.Adapter<Loa
             true
 
         }
+
+        viewHolder.layout.isClickable = true
+        viewHolder.layout.setOnClickListener {
+            val detailIntent =Intent(it.context, LoanDetailActivity::class.java)
+            detailIntent.putExtra(EXTRA_LOAN, loan)
+            it.context.startActivity(detailIntent)
+        }
     }
 
     private fun deleteFromBackendless(position: Int) {
@@ -74,9 +86,9 @@ class LoanListAdapter(var data: MutableList<LoanData>): RecyclerView.Adapter<Loa
                 override fun handleResponse(response: Long?) {
                     // Person has been deleted. The response is the
                     // time in milliseconds when the object was deleted
-                    Toast.makeText(this, "${data[position].name} Deleted", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "${data[position].name} Deleted", Toast.LENGTH_SHORT).show()
                     data.removeAt(position)
-                    
+                    //reload page
                 }
 
                 override fun handleFault(fault: BackendlessFault) {
