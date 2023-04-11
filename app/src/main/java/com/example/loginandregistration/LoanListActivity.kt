@@ -42,6 +42,15 @@ class LoanListActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        userId = intent.getStringExtra(EXTRA_USER_ID)!!
+        if(userId != null) {
+            retrieveAllData(userId)
+        }
+    }
+
     private fun retrieveAllData(userId: String) {
         val whereClause = "ownerId = '$userId'"
         val queryBuilder = DataQueryBuilder.create()

@@ -13,8 +13,8 @@ data class LoanData(
     var repaid: Double = 0.0,
     var dateRepaid: Date = Date(0),
     var isRepaid: Boolean = true,
-    var ownerId: String = "",
-    var objectId: String = ""
+    var ownerId: String? = null,
+    var objectId: String? = null
 ) : Parcelable {
     fun balanceRemaining(): Double {
         return amount - repaid

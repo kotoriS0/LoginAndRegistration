@@ -9,7 +9,7 @@
         android:id="@+id/group_loanDetail_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="textView_loanDetail_currentAmountOwedLabel,textView_loanDetail_amountPaid,textView_loanDetail_description,textView_loanDetail_amountOwed,imageView_loanDetail_status,textView_loanDetail_date,textView_loanDetail_initialLoanLabel,textView_loanDetail_dateLastRepaid,textView_loanDetail_dateLastRepaidLabel,textView_loanDetail_amountPaidLabel,textView_loanDetail_name,textView_loanDetail_initialLoan" />
+        app:constraint_referenced_ids="textView_loanDetail_currentAmountOwedLabel,textView_loanDetail_amountPaid,textView_loanDetail_description,textView_loanDetail_amountOwed,imageView_loanDetail_status,textView_loanDetail_dateLentInfo,textView_loanDetail_initialLoanLabel,textView_loanDetail_dateLastRepaidInfo,textView_loanDetail_dateLastRepaidLabel,textView_loanDetail_amountPaidLabel,textView_loanDetail_name,textView_loanDetail_initialLoan" />
 
     <TextView
         android:id="@+id/textView_loanDetail_amountOwed"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView_loanDetail_amountPaidLabel" />
 
     <TextView
-        android:id="@+id/textView_loanDetail_date"
+        android:id="@+id/textView_loanDetail_dateLentInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -60,17 +60,17 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:text="Last Repayment:"
-        app:layout_constraintEnd_toStartOf="@+id/textView_loanDetail_dateLastRepaid"
+        app:layout_constraintEnd_toStartOf="@+id/textView_loanDetail_dateLastRepaidInfo"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView_loanDetail_amountPaid"
         app:layout_constraintTop_toTopOf="@+id/textView_loanDetail_amountPaid" />
 
     <TextView
-        android:id="@+id/textView_loanDetail_dateLastRepaid"
+        android:id="@+id/textView_loanDetail_dateLastRepaidInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="00/00/0000"
-        app:layout_constraintEnd_toEndOf="@+id/textView_loanDetail_date"
+        app:layout_constraintEnd_toEndOf="@+id/textView_loanDetail_dateLentInfo"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView_loanDetail_dateLastRepaidLabel"
         app:layout_constraintTop_toTopOf="@+id/textView_loanDetail_dateLastRepaidLabel" />
@@ -119,7 +119,7 @@
         android:layout_marginTop="15dp"
         android:text="Initial Loan:"
         app:layout_constraintStart_toStartOf="@+id/textView_loanDetail_amountPaidLabel"
-        app:layout_constraintTop_toBottomOf="@+id/textView_loanDetail_dateLastRepaid" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_loanDetail_dateLastRepaidInfo" />
 
     <TextView
         android:id="@+id/textView_loanDetail_initialLoan"
@@ -128,7 +128,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:text="$0.0"
-        app:layout_constraintEnd_toStartOf="@+id/textView_loanDetail_date"
+        app:layout_constraintEnd_toStartOf="@+id/textView_loanDetail_dateLentInfo"
         app:layout_constraintStart_toEndOf="@+id/textView_loanDetail_initialLoanLabel"
         app:layout_constraintTop_toTopOf="@+id/textView_loanDetail_initialLoanLabel" />
 
@@ -146,17 +146,18 @@
         android:id="@+id/group_loanDetail_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="editText_loanDetail_name,editText_loanDetail_amountRepaid,editText_loanDetail_initialLoan,button_loanDetail_save" />
+        app:constraint_referenced_ids="button_loanDetail_editDateLastRepaid,textView_loanDetail_dateLastRepaidEdit,textView_loanDetail_dateLentEdit,editText_loanDetail_description,editText_loanDetail_name,editText_loanDetail_initialLoan,button_loanDetail_editDateLent,button_loanDetail_save,editText_loanDetail_amountRepaid" />
 
     <Button
         android:id="@+id/button_loanDetail_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="@+id/editText_loanDetail_initialLoan"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/editText_loanDetail_initialLoan"
-        app:layout_constraintTop_toBottomOf="@+id/editText_loanDetail_initialLoan" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_loanDetail_dateLastRepaidEdit" />
 
     <EditText
         android:id="@+id/editText_loanDetail_name"
@@ -177,25 +178,81 @@
         android:id="@+id/editText_loanDetail_amountRepaid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Amount Repaid"
         android:inputType="number|textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/editText_loanDetail_name"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/editText_loanDetail_name"
-        app:layout_constraintTop_toBottomOf="@+id/editText_loanDetail_name" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_loanDetail_description" />
 
     <EditText
         android:id="@+id/editText_loanDetail_initialLoan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="Initial Loan"
         android:inputType="number|textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editText_loanDetail_amountRepaid"
+        app:layout_constraintEnd_toEndOf="@+id/editText_loanDetail_name"
+        app:layout_constraintStart_toStartOf="@+id/editText_loanDetail_name"
+        app:layout_constraintTop_toBottomOf="@+id/editText_loanDetail_name" />
+
+    <TextView
+        android:id="@+id/textView_loanDetail_dateLentEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="00/00/0000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/button_loanDetail_editDateLent"
+        app:layout_constraintStart_toStartOf="@+id/editText_loanDetail_initialLoan"
+        app:layout_constraintTop_toBottomOf="@+id/editText_loanDetail_initialLoan" />
+
+    <ImageButton
+        android:id="@+id/button_loanDetail_editDateLent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_loanDetail_dateLentEdit"
+        app:layout_constraintEnd_toEndOf="@+id/editText_loanDetail_initialLoan"
+        app:layout_constraintTop_toTopOf="@+id/textView_loanDetail_dateLentEdit"
+        app:srcCompat="@drawable/ic_baseline_calendar_month_24" />
+
+    <EditText
+        android:id="@+id/editText_loanDetail_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Description"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/button_loanDetail_editDateLent"
+        app:layout_constraintStart_toStartOf="@+id/textView_loanDetail_dateLentEdit"
+        app:layout_constraintTop_toBottomOf="@+id/textView_loanDetail_dateLentEdit" />
+
+    <TextView
+        android:id="@+id/textView_loanDetail_dateLastRepaidEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:text="00/00/0000"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/button_loanDetail_editDateLastRepaid"
         app:layout_constraintStart_toStartOf="@+id/editText_loanDetail_amountRepaid"
         app:layout_constraintTop_toBottomOf="@+id/editText_loanDetail_amountRepaid" />
+
+    <ImageButton
+        android:id="@+id/button_loanDetail_editDateLastRepaid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_loanDetail_dateLastRepaidEdit"
+        app:layout_constraintEnd_toEndOf="@+id/editText_loanDetail_amountRepaid"
+        app:layout_constraintTop_toTopOf="@+id/textView_loanDetail_dateLastRepaidEdit"
+        app:srcCompat="@drawable/ic_baseline_calendar_month_24" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

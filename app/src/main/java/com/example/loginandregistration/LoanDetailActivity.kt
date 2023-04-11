@@ -1,5 +1,6 @@
 package com.example.loginandregistration
 
+import android.app.DatePickerDialog
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,8 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.DatePicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
@@ -18,6 +21,7 @@ import com.backendless.async.callback.AsyncCallback
 import com.backendless.exceptions.BackendlessFault
 import com.example.loginandregistration.LoginActivity.Companion.EXTRA_USER_ID
 import com.example.loginandregistration.databinding.ActivityLoanDetailBinding
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
@@ -28,7 +32,10 @@ class LoanDetailActivity : AppCompatActivity() {
     var loanIsEditable = false
     lateinit var loan : LoanData
 
+    var cal = Calendar.getInstance()
+
     companion object {
+        const val TAG = "LoanDetailActivity"
         const val EXTRA_LOAN = "loan"
     }
 
@@ -50,8 +57,8 @@ class LoanDetailActivity : AppCompatActivity() {
             loan = intent.getParcelableExtra<LoanData>(EXTRA_LOAN) ?: LoanData()
             binding.textViewLoanDetailName.text = loan.name
             binding.textViewLoanDetailAmountPaid.text = "$${loan.repaid}"
-            binding.textViewLoanDetailDate.text = dateFormater(loan.dateLent)
-            binding.textViewLoanDetailDateLastRepaid.text = dateFormater(loan.dateRepaid)
+            binding.textViewLoanDetailDateLentInfo.text = dateFormater(loan.dateLent)
+            binding.textViewLoanDetailDateLastRepaidInfo.text = dateFormater(loan.dateRepaid)
             binding.textViewLoanDetailDescription.text = loan.description
             binding.textViewLoanDetailAmountOwed.text = "$${loan.balanceRemaining()}"
             binding.textViewLoanDetailInitialLoan.text = "$${loan.amount}"
@@ -68,25 +75,112 @@ class LoanDetailActivity : AppCompatActivity() {
                     )
                 )
             }
+            toggleEditable()
         }
 
-        if(loan.ownerId.isBlank()) {
-            loan.ownerId = intent.getStringExtra(LoginActivity.Companion.EXTRA_USER_ID)!!
+        val dateSetListener = object : DatePickerDialog.OnDateSetListener {
+            override fun onDateSet(view: DatePicker, year: Int, monthOfYear: Int,
+                                   dayOfMonth: Int) {
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, monthOfYear)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateDateInView()
+            }
         }
 
         binding.buttonLoanDetailSave.setOnClickListener {
             // edit loan data on backendless and on screen
+
+            if(loan.ownerId.isNullOrBlank()) {
+                loan.ownerId = intent.getStringExtra(LoginActivity.Companion.EXTRA_USER_ID)!!
+            }
+
+            //lateinit var newLoan: LoanData
+            loan.ownerId = loan.ownerId
             loan.name = binding.editTextLoanDetailName.text.toString() ?: loan.name
-            loan.repaid = binding.editTextLoanDetailAmountRepaid.toString().toDouble() ?: loan.repaid
-            // repayment date
-            // description
             loan.amount = binding.editTextLoanDetailInitialLoan.toString().toDouble() ?: loan.repaid
-            // add options to change other things
+            loan.dateLent
+            loan.repaid = binding.editTextLoanDetailAmountRepaid.toString().toDouble() ?: loan.repaid
+            loan.description = binding.editTextLoanDetailDescription.toString() ?: loan.description
+            loan.repaid = binding.editTextLoanDetailAmountRepaid.toString().toDouble() ?: loan.repaid
+            loan.dateRepaid
+
+            Backendless.Data.of(LoanData::class.java).save(loan,
+            object : AsyncCallback<LoanData> {
+                override fun handleResponse(savedLoanData: LoanData) {
+                    savedLoanData.ownerId = loan.ownerId
+                    savedLoanData.name = binding.editTextLoanDetailName.text.toString() ?: loan.name
+                    savedLoanData.amount = binding.editTextLoanDetailInitialLoan.toString().toDouble() ?: loan.repaid
+                    savedLoanData.dateLent
+                    savedLoanData.repaid = binding.editTextLoanDetailAmountRepaid.toString().toDouble() ?: loan.repaid
+                    savedLoanData.description = binding.editTextLoanDetailDescription.toString() ?: loan.description
+                    savedLoanData.repaid = binding.editTextLoanDetailAmountRepaid.toString().toDouble() ?: loan.repaid
+                    savedLoanData.dateRepaid
+
+                    Backendless.Data.of(LoanData::class.java).save( savedLoanData, object: AsyncCallback<LoanData> {
+                        override fun handleResponse(response: LoanData)
+                        {
+                            // Contact instance has been updated
+                            //Log.d(TAG, "handleResponse: $response")
+                            if(loan.repaid >= loan.amount) {
+                                loan.isRepaid == true
+                                binding.imageViewLoanDetailStatus.setImageDrawable(
+                                    AppCompatResources.getDrawable(
+                                        binding.textViewLoanDetailName.context, R.drawable.ic_baseline_check_24
+                                    )
+                                )
+                            }
+                            else {
+                                binding.imageViewLoanDetailStatus.setImageDrawable(
+                                    AppCompatResources.getDrawable(
+                                        binding.textViewLoanDetailName.context, R.drawable.ic_baseline_clear_24
+                                    )
+                                )
+                            }
+                            toggleEditable()
+                        }
+
+                        override fun handleFault(fault: BackendlessFault?) {
+                            Log.d(TAG, "handleFault: $fault")
+                        }
+                    } )
+                }
+
+                override fun handleFault(fault: BackendlessFault) {
+                    Log.d(TAG, "handleFault: $fault")
+                }
+            })
+        }
+
+        binding.buttonLoanDetailEditDateLent.setOnClickListener{
+                DatePickerDialog(this.baseContext,
+                    dateSetListener,
+                    // set DatePickerDialog to point to today's date when it loads up
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
+        binding.buttonLoanDetailEditDateLastRepaid.setOnClickListener {
+
+            DatePickerDialog(this.baseContext,
+                dateSetListener,
+                // set DatePickerDialog to point to today's date when it loads up
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)).show()
         }
     }
 
+    fun updateDateInView() {
+        val myFormat = "MM/dd/yyyy" // mention the format you need
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        binding.textViewLoanDetailDateLentEdit.text = sdf.format(cal.time)
+        binding.textViewLoanDetailDateLastRepaidEdit.text = sdf.format(cal.time)
+    }
+
     fun dateFormater(date: Date): String {
-        return "${date.month}/${date.date}/${date.year + 1900} ${date.hours}:${date.minutes}"
+        return "${date.month}/${date.day}/${date.year + 1900}"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

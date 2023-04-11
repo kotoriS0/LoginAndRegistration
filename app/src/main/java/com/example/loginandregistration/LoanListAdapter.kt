@@ -95,6 +95,7 @@ class LoanListAdapter(var data: MutableList<LoanData>): RecyclerView.Adapter<Loa
                     Log.d("BirthdayDetail", "handleFault: ${fault.message}")
                 }
             })
+
     }
 
     override fun getItemCount() = data.size
